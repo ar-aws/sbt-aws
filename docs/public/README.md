@@ -652,6 +652,7 @@ To install the CLI, ensure that you have Python and `pip` installed, and then in
 
 ```bash
 pip install typer requests
+```
 
 ## Additional documentation and resources
 
