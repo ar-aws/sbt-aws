@@ -635,6 +635,24 @@ The application plane emits this event upon completion of offboarding. Similar t
 - **Built in the open with the community** - SBT strives to meet developers where they are. We encourage PRs, not forks
 - **Guide builders and make it approachable** - SBT will provide rich documentation and examples from which the community can derive inspiration and reference
 
+## Command Line Interface (CLI) for SaaS Builder Toolkit (SBT)
+
+The SaaS Builder Toolkit (SBT) now includes a powerful Command Line Interface (CLI) to simplify and automate the management of your SaaS environment on AWS. The CLI is designed to interact with the Control Plane of SBT, allowing users to configure, manage tenants and users, and perform other administrative tasks seamlessly from the command line.
+
+### Key Features
+
+- **Configuration Management:** Easily configure the CLI with Control Plane stack details, including API endpoints and authentication information.
+- **Tenant Management:** Create, retrieve, update, and delete tenants within your SaaS environment. The CLI provides straightforward commands to manage tenant data and lifecycle operations.
+- **User Management:** Handle user accounts associated with your SaaS tenants. You can create, retrieve, update, and delete users, ensuring that your SaaS environment’s access controls are easily managed.
+- **Token Management:** Automatically handle OAuth 2.0 tokens, including refreshing access tokens, ensuring secure and persistent authentication for your CLI operations.
+
+### Installation
+
+To install the CLI, ensure that you have Python and `pip` installed, and then install the required dependencies using the following command:
+
+```bash
+pip install typer requests
+
 ## Additional documentation and resources
 
 ### Tenant management
