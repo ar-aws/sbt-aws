@@ -3,8 +3,7 @@ name: Publish Python 🐍 distribution 📦 to PyPI
 on:
   push:
     tags:
-      - '*'
-    branches:
+      - 'cli-update*'  # Trigger workflow only for tags that start with 'cli-update'
 
 jobs:
   build:
@@ -62,5 +61,5 @@ jobs:
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        packages_dir: scripts/sbt-aws-cli-testt/dist/  # Specify the correct directory for the action
+        packages-dir: scripts/sbt-aws-cli-testt/dist/  # Specify the correct directory for the action
         repository-url: https://upload.pypi.org/legacy/
