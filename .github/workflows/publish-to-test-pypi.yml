@@ -1,27 +1,56 @@
-name: Publish Python 🐍 distribution 📦 to PyPI
+name: Bump Version and Publish Python 🐍 distribution 📦 to PyPI
 
 on:
   push:
     tags:
-      - '*'
+      - '*'  # Trigger workflow on tag push
     branches:
+      - main  # Replace with your branch name if different
 
 jobs:
-  build:
-    name: Build distribution 📦
+  bump-version:
+    name: Bump Version
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: "3.x"
-    
+
+    - name: Install bump2version
+      run: pip install bump2version
+
+    - name: Bump the version
+      run: |
+        cd scripts/sbt-aws-cli-test  # Change to the directory where pyproject.toml is located
+        bump2version patch  # Use patch, minor, or major based on your release type
+
+    - name: Push bumped version
+      run: |
+        cd scripts/sbt-aws-cli-test  # Ensure you're in the correct directory
+        git push origin main --tags
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-and-publish:
+    name: Build and Publish to PyPI
+    runs-on: ubuntu-latest
+    needs: bump-version  # Ensure the version is bumped before building
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+
     - name: Install Poetry
       run: pip install poetry
-    
+
     - name: Install dependencies
       run: poetry install --no-dev
       working-directory: scripts/sbt-aws-cli-test
@@ -30,26 +59,15 @@ jobs:
       run: poetry build
       working-directory: scripts/sbt-aws-cli-test
     
-    - name: List files in dist/
+    - name: List files in dist/ after build
       run: ls -la scripts/sbt-aws-cli-test/dist/
-    
+
     - name: Store the distribution packages
       uses: actions/upload-artifact@v3
       with:
         name: python-package-distributions
         path: scripts/sbt-aws-cli-test/dist/
 
-  publish-to-pypi:
-    name: Publish Python 🐍 distribution 📦 to PyPI
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/project/sbt-aws-cli-test  # Replace with your package name
-    permissions:
-      id-token: write  # Mandatory for trusted publishing
-
-    steps:
     - name: Download all the dists
       uses: actions/download-artifact@v3
       with:
@@ -57,10 +75,10 @@ jobs:
         path: scripts/sbt-aws-cli-test/dist/
 
     - name: List files in dist/ after download
-      run: ls -la scripts/sbt-aws-cli-test/dist/  # Check what's in the dist/ directory after downloading the artifacts
+      run: ls -la scripts/sbt-aws-cli-test/dist/
 
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        packages_dir: scripts/sbt-aws-cli-test/dist/  # Specify the correct directory for the action
+        packages_dir: scripts/sbt-aws-cli-test/dist/
         repository-url: https://upload.pypi.org/legacy/
