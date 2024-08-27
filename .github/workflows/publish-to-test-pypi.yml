@@ -24,20 +24,20 @@ jobs:
     
     - name: Install dependencies
       run: poetry install --no-dev
-      working-directory: scripts/sbt-aws-cli-testtt
+      working-directory: scripts/sbt-aws-cli-testt
     
     - name: Build the distribution
       run: poetry build
-      working-directory: scripts/sbt-aws-cli-testtt
+      working-directory: scripts/sbt-aws-cli-testt
     
     - name: List files in dist/
-      run: ls -la scripts/sbt-aws-cli-testtt/dist/
+      run: ls -la scripts/sbt-aws-cli-testt/dist/
     
     - name: Store the distribution packages
       uses: actions/upload-artifact@v3
       with:
         name: python-package-distributions
-        path: scripts/sbt-aws-cli-testtt/dist/
+        path: scripts/sbt-aws-cli-testt/dist/
 
   publish-to-pypi:
     name: Publish Python 🐍 distribution 📦 to PyPI
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/sbt-aws-cli-testtt  # Replace with your package name
+      url: https://pypi.org/project/sbt-aws-cli-testt  # Replace with your package name
     permissions:
       id-token: write  # Mandatory for trusted publishing
 
@@ -54,13 +54,13 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: python-package-distributions
-        path: scripts/sbt-aws-cli-testtt/dist/
+        path: scripts/sbt-aws-cli-testt/dist/
 
     - name: List files in dist/ after download
-      run: ls -la scripts/sbt-aws-cli-testtt/dist/  # Check what's in the dist/ directory after downloading the artifacts
+      run: ls -la scripts/sbt-aws-cli-testt/dist/  # Check what's in the dist/ directory after downloading the artifacts
 
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        packages_dir: scripts/sbt-aws-cli-testtt/dist/  # Specify the correct directory for the action
+        packages_dir: scripts/sbt-aws-cli-testt/dist/  # Specify the correct directory for the action
         repository-url: https://upload.pypi.org/legacy/
