@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - '*'
+    branches:
+      - main  # Replace with your branch name if different
 
 jobs:
   build:
@@ -22,12 +24,12 @@ jobs:
       run: pip install poetry
     
     - name: Install dependencies
-      run: cd scripts/sbt-aws-cli-test
       run: poetry install --no-dev
-    
+      working-directory: scripts/sbt-aws-cli-test  # Run this in the correct directory
+
     - name: Build the distribution
       run: poetry build
-      working-directory: scripts/sbt-aws-cli-test  # Point to the directory with pyproject.toml
+      working-directory: scripts/sbt-aws-cli-test  # Run this in the correct directory
 
     - name: Store the distribution packages
       uses: actions/upload-artifact@v3
