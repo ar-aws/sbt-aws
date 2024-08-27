@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sbt-aws-cli-test"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["ar-aws <roperia@amazon.com>"]
 readme = "README.md"
