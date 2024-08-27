@@ -40,27 +40,27 @@ jobs:
         path: scripts/sbt-aws-cli-test/dist/
 
   publish-to-pypi:
-  name: Publish Python 🐍 distribution 📦 to PyPI
-  needs: build
-  runs-on: ubuntu-latest
-  environment:
-    name: pypi
-    url: https://pypi.org/project/sbt-aws-cli-test  # Replace with your package name
-  permissions:
-    id-token: write  # Mandatory for trusted publishing
+    name: Publish Python 🐍 distribution 📦 to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/sbt-aws-cli-test  # Replace with your package name
+    permissions:
+      id-token: write  # Mandatory for trusted publishing
 
-  steps:
-  - name: Download all the dists
-    uses: actions/download-artifact@v3
-    with:
-      name: python-package-distributions
-      path: scripts/sbt-aws-cli-test/dist/
+    steps:
+    - name: Download all the dists
+      uses: actions/download-artifact@v3
+      with:
+        name: python-package-distributions
+        path: scripts/sbt-aws-cli-test/dist/
 
-  - name: List files in dist/ after download
-    run: ls -la scripts/sbt-aws-cli-test/dist/  # Check what's in the dist/ directory after downloading the artifacts
+    - name: List files in dist/ after download
+      run: ls -la scripts/sbt-aws-cli-test/dist/  # Check what's in the dist/ directory after downloading the artifacts
 
-  - name: Publish distribution 📦 to PyPI
-    uses: pypa/gh-action-pypi-publish@release/v1
-    with:
-      packages_dir: scripts/sbt-aws-cli-test/dist/  # Specify the correct directory for the action
-      repository-url: https://upload.pypi.org/legacy/
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        packages_dir: scripts/sbt-aws-cli-test/dist/  # Specify the correct directory for the action
+        repository-url: https://upload.pypi.org/legacy/
