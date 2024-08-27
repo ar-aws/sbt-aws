@@ -18,16 +18,16 @@ jobs:
         python-version: "3.x"
 
     - name: Install build package
-      run: python3 -m pip install build --user
+      run: python3 -m pip install /scripts/sbt-aws-cli-test --user
 
     - name: Build a binary wheel and a source tarball
-      run: python3 -m build
+      run: python3 -m build /scripts/sbt-aws-cli-test
 
     - name: Store the distribution packages
       uses: actions/upload-artifact@v3
       with:
         name: python-package-distributions
-        path: dist/
+        path: /scripts/sbt-aws-cli-test/dist
 
   publish-to-pypi:
     name: Publish Python 🐍 distribution 📦 to PyPI
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/<your-package-name>  # Replace <your-package-name> with your actual package name
+      url: https://pypi.org/project/sbt-aws-cli-test  # Replace <your-package-name> with your actual package name
     permissions:
       id-token: write  # Mandatory for trusted publishing
 
@@ -44,7 +44,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: python-package-distributions
-        path: dist/
+        path: /scripts/sbt-aws-cli-test/dist
 
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
