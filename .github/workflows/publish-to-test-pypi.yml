@@ -5,7 +5,6 @@ on:
     tags:
       - '*'
     branches:
-      - main  # Replace with your branch name if different
 
 jobs:
   build:
