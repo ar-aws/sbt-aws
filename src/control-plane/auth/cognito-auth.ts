@@ -20,7 +20,6 @@ import { CreateAdminUserProps, IAuth } from './auth-interface';
 import { setupCognitoAuthCLI } from './cli-auth';
 import { addTemplateTag } from '../../utils';
 
-
 /**
  * Properties for the CognitoAuth construct.
  */
