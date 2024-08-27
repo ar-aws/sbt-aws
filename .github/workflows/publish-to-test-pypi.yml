@@ -56,6 +56,9 @@ jobs:
         name: python-package-distributions
         path: scripts/sbt-aws-cli-test/dist/
 
+    - name: List downloaded files
+      run: ls -la scripts/sbt-aws-cli-test/dist/  # List the files after downloading the artifacts
+
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
